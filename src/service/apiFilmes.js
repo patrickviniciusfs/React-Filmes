@@ -2,14 +2,12 @@ import axios from "axios";
 
 const apiFilmes = axios.create({
   baseURL: "https://api.themoviedb.org/3",
-headers:{
-  accept:'application/json',
+  headers: {
+    accept: 'application/json',
     Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`
-}
-    
-    ,
-      params: {
-    language: "pt",
+  },
+  params: {
+    language: "pt-BR",
     include_adult: false,
   },
 });
