@@ -1,0 +1,58 @@
+.container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #f0f0f0;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #222;
+}
+
+.text {
+  line-height: 1.8;
+  margin-bottom: 15px;
+  color: #222;
+  text-align: justify;
+}
+
+.previewBox {
+  margin-top: 25px;
+  padding: 15px;
+  border: 2px solid #0070f3;
+  border-radius: 8px;
+  color: #222;
+}
+
+.previewBox h2 {
+  margin-bottom: 10px;
+}
+
+.previewBox ul {
+  padding-left: 20px;
+}
+
+.previewBox li {
+  margin-bottom: 6px;
+}
+.logoContainer {
+  text-align: center;
+  margin: 25px 0;
+}
+
+.logo {
+  width: 180px;
+  max-width: 100%;
+}
+
+.logoText {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #555;
+}
