@@ -1,4 +1,4 @@
-import { FaFacebook, FaInstagram, FaLinkedin } from "react-icons/fa";
+import { FaFacebook, FaInstagram, FaLinkedin, FaGithub } from "react-icons/fa";
 import * as styles from "./Footer.module.css";
 
 export default function Footer() {
@@ -7,7 +7,8 @@ export default function Footer() {
       <ul className={styles.social_list}>
         <li><FaFacebook/> </li>
         <li><FaInstagram/> </li>
-        <li><FaLinkedin/></li>
+        <li><FaLinkedin/> </li>
+        <li><FaGithub/> </li>
       </ul>
     </footer>
   );
