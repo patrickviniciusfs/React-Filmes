@@ -1,3 +1,12 @@
+import Cards from '../../components/Cards';
+
 export default function Home() {
-  return <h2>🎬 Lista de Filmes Populares</h2>;
+
+  return (
+  <div>
+  <h2>🎬 Lista de Filmes Populares</h2>;
+  <Cards/>
+  <Cards/>
+  </div>
+  )
 }
