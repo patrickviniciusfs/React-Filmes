@@ -10,6 +10,7 @@ export default function Footer() {
         <li><FaLinkedin/> </li>
         <li><FaGithub/> </li>
       </ul>
+    
     </footer>
   );
 }

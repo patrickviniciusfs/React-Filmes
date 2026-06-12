@@ -12,45 +12,50 @@ export default function Login() {
   const navigate = useNavigate();
 
 
-
-  const busca= async () => {
-    setErro("");
-    try {
-      const response = 
-      await api.get("/login");
-      setLogins(response.data);
-    } catch(error){
-      console.error(error.required);
-      setErro("Erro ao buscar todos os dados");
-    }}
+    
 
   const autenticar = async (e) => {
     e.preventDefault();
     setErro("");
     try {
-    busca();
-   const loginEncontrado = logins.find((log)=>log.email===username && log.senha===password);
+      const response = 
+      await api.get("/login");
+      console.log(response.data);
+      // setLogins(response.data);
+      const loginEncontrado = response.data.find((log)=>log.email===username && log.senha===password);
+      if(loginEncontrado) {
+       localStorage.setItem("email", username);
+       navigate("/home");
+      }else{
+        setErro("senha ou email incorreto")
+      }
+    } catch(error){
+      console.error(error.required);
+      setErro("Erro ao realizar login");
+    }}
+ 
+   
 
-   if(loginEncontrado){
-    const loginId = loginEncontrado.id;
-      // const response = 
+  //  if(loginEncontrado){
+  //   const loginId = loginEncontrado.id;
+  //     // const response = 
 
-      await api.post(`/login/${loginId}`, {
-        email: username,
-        senha : password,
-      });
-    }
+  //     await api.get(`/login/${loginId}`, {
+  //       email: username,
+  //       senha : password,
+  //     });
+  //   }
       // const token = response.data.token;
       // localStorage.setItem("token", token);
       
       // // Armazena o username digitado sem alterar o fluxo da resposta da API
-      localStorage.setItem("username", username);
+     
 
-      navigate("/home");
-    } catch (error) {
-      setErro(`${error} usuário ou senha incorretos `);
-    }
-  };
+  //     
+  //   } catch (error) {
+  //     setErro(`${error} usuário ou senha incorretos `);
+  //   }
+  // };
 
   return (
     <div className={styles.loginContainer}>

@@ -10,6 +10,7 @@ export default function Home() {
       <FilterByNome onSearch={setQuery} />
       <h2>🎬 Lista de Filmes Populares</h2>
       <Card query={query} />
+
     </div>
   );
 }
