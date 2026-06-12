@@ -1,8 +1,25 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useTheme } from '../ThemeContext';
+import { useEffect, useState } from 'react';
+import styles from './Header.module.css';
 
 export default function Header() {
+  const [usuarioLogado, setUsuarioLogado] = useState("");
   const { theme, toggleTheme } = useTheme();
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    const nomeSalvo = localStorage.getItem("username");
+    if (nomeSalvo) {
+      const nomeLimpo = nomeSalvo.split("@")[0];
+      setUsuarioLogado(nomeLimpo);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.clear(); // Remove token, username e limpa a sessão
+    navigate("/login"); // Redireciona de volta para a tela de login
+  };
 
   const linkStyle = {
     color: 'var(--text)',
@@ -22,7 +39,7 @@ export default function Header() {
       transition: 'all 0.3s ease'
     }}>
       <h1 style={{ margin: 0, fontSize: '1.5rem' }}>React Filmes 🎬</h1>
-      
+
       <nav style={{ display: 'flex', gap: '20px' }}>
         <Link to="/" style={linkStyle}>Início</Link>
         <Link to="/about" style={linkStyle}>Sobre</Link>
@@ -30,21 +47,32 @@ export default function Header() {
         <Link to="/details" style={linkStyle}>Detalhes</Link>
       </nav>
 
-      <button 
-        onClick={toggleTheme}
-        style={{
-          padding: '8px 16px',
-          cursor: 'pointer',
-          borderRadius: '6px',
-          border: '1px solid #ccc',
-          backgroundColor: theme === 'light' ? '#333' : '#f0f0f0',
-          color: theme === 'light' ? '#fff' : '#333',
-          transition: 'all 0.3s ease',
-          fontWeight: 'bold'
-        }}
-      >
-        {theme === 'light' ? 'Dark' : 'Light'}
-      </button>
+      <div className={styles.userSection} style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+        {usuarioLogado && (
+          <span className={styles.username}>
+            {usuarioLogado}
+          </span>
+        )}
+        <button onClick={handleLogout} className={styles.logoutBtn}>
+          Sair
+        </button>
+
+        <button
+          onClick={toggleTheme}
+          style={{
+            padding: '8px 16px',
+            cursor: 'pointer',
+            borderRadius: '6px',
+            border: '1px solid #ccc',
+            backgroundColor: theme === 'light' ? '#333' : '#f0f0f0',
+            color: theme === 'light' ? '#fff' : '#333',
+            transition: 'all 0.3s ease',
+            fontWeight: 'bold'
+          }}
+        >
+          {theme === 'light' ? 'Dark' : 'Light'}
+        </button>
+      </div>
     </header>
   );
 }

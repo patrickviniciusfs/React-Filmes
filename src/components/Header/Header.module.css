@@ -1,0 +1,30 @@
+.userSection {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.username {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+}
+
+.logoutBtn {
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: 1px solid #ff4d4f;
+  background-color: transparent;
+  color: #ff4d4f;
+  font-weight: bold;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.logoutBtn:hover {
+  background-color: #ff4d4f;
+  color: #ffffff;
+  transform: scale(1.05);
+}
