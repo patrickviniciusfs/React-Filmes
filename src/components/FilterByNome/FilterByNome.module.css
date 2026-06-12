@@ -1,0 +1,5 @@
+.container { margin: 1rem 0; }
+.form { display: flex; gap: 0.5rem; }
+.input { flex: 1; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem; }
+.btnBuscar { padding: 0.5rem 1.2rem; border-radius: 8px; background: #e50914; color: #fff; border: none; cursor: pointer; }
+.btnLimpar { padding: 0.5rem 0.8rem; border-radius: 8px; background: #555; color: #fff; border: none; cursor: pointer; }
