@@ -1,0 +1,71 @@
+.container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: var(--text);
+}
+
+.title {
+  font-size: 2.2rem;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  text-align: justify;
+  margin: 0;
+}
+
+.logoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--bg-card, rgba(0, 0, 0, 0.05));
+  padding: 30px;
+  border-radius: 12px;
+  margin-top: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.logo {
+  max-width: 200px;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+.logoText {
+  font-size: 0.9rem;
+  text-align: center;
+  opacity: 0.8;
+  margin: 0;
+  max-width: 80%;
+}
+
+.previewBox {
+  margin-top: 30px;
+  padding: 25px;
+  border-left: 4px solid #0070f3;
+  background-color: rgba(0, 112, 243, 0.05);
+  border-radius: 0 8px 8px 0;
+}
+
+.previewBox h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+  color: var(--text);
+}
+
+.previewBox ul {
+  list-style-type: square;
+  padding-left: 20px;
+  margin: 0;
+  line-height: 1.8;
+  font-size: 1.1rem;
+}
