@@ -3,42 +3,65 @@ import apiFilmes from '../../service/apiFilmes';
 import styles from './Card.module.css';
 import { Link } from 'react-router-dom';
 
-export default function Card() {
+export default function Card({ query }) {
   const [filmes, setFilmes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [semResultado, setSemResultado] = useState(false);
 
   useEffect(() => {
     async function carregarFilmes() {
+      setLoading(true);
+      setSemResultado(false);
+      setFilmes([]);
+
       try {
-        const response = await apiFilmes.get("/movie/popular", {
-          params: { page: 1 }
-        });
-        setFilmes(response.data.results);
-        setLoading(false);
+        let resultados = [];
+        const buscando = query && query.trim() !== '';
+
+        if (buscando) {
+          const response = await apiFilmes.get("/search/movie", {
+            params: { query: query.trim(), page: 1 }
+          });
+
+          resultados = response.data.results.filter((filme) =>
+            filme.title.toLowerCase().includes(query.trim().toLowerCase())
+          );
+
+        } else {
+          const response = await apiFilmes.get("/movie/popular", {
+            params: { page: 1 }
+          });
+          resultados = response.data.results;
+        }
+
+        setFilmes(resultados);
+        setSemResultado(resultados.length === 0);
       } catch (error) {
-        console.log("Erro ao carregar os filmes", error);
+        console.error("Erro ao carregar filmes:", error.response?.data || error.message);
+        setSemResultado(true);
+      } finally {
         setLoading(false);
       }
     }
-    carregarFilmes();
-  }, []);
 
-  if (loading) {
-    return <h2>Carregando filmes ...</h2>;
-  }
+    carregarFilmes();
+  }, [query]);
+
+  if (loading) return <h2>Carregando filmes...</h2>;
+  if (semResultado) return <h2>Nenhum filme encontrado para "{query}".</h2>;
 
   return (
     <div className={styles.galeria}>
       {filmes.map((filme) => (
         <div key={filme.id} className={styles.card}>
           <h3>{filme.title}</h3>
-          
           {filme.poster_path ? (
             <Link to={`/details/${filme.id}`}>
-            <img 
-              src={`https://image.tmdb.org/t/p/w500${filme.poster_path}`} 
-              alt={filme.title} 
-              className={styles.img} />
+              <img
+                src={`https://image.tmdb.org/t/p/w500${filme.poster_path}`}
+                alt={filme.title}
+                className={styles.img}
+              />
             </Link>
           ) : (
             <div className={styles.semFoto}>Sem Imagem</div>
