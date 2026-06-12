@@ -1,5 +1,81 @@
-.container { margin: 1rem 0; }
-.form { display: flex; gap: 0.5rem; }
-.input { flex: 1; padding: 0.5rem 1rem; border-radius: 8px; border: 1px solid #ccc; font-size: 1rem; }
-.btnBuscar { padding: 0.5rem 1.2rem; border-radius: 8px; background: #e50914; color: #fff; border: none; cursor: pointer; }
-.btnLimpar { padding: 0.5rem 0.8rem; border-radius: 8px; background: #555; color: #fff; border: none; cursor: pointer; }
+.container {
+  display: flex;
+  justify-content: center;
+  margin: 30px 20px;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  max-width: 600px;
+}
+
+.input {
+  flex: 1;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(128, 128, 128, 0.4);
+  background-color: var(--bg, transparent);
+  color: var(--text);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #0070f3;
+  box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.2);
+}
+
+.btnBuscar {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #0070f3;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btnBuscar:hover {
+  background-color: #0051bb;
+}
+
+.btnLimpar {
+  background-color: transparent;
+  color: var(--text);
+  border: 1px solid rgba(128, 128, 128, 0.4);
+  border-radius: 8px;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btnLimpar:hover {
+  background-color: #ff4d4f;
+  color: #fff;
+  border-color: #ff4d4f;
+}
+
+@media (max-width: 480px) {
+  .form {
+    flex-wrap: wrap;
+  }
+  
+  .input {
+    min-width: 100%;
+  }
+  
+  .btnBuscar {
+    flex: 1;
+  }
+}
