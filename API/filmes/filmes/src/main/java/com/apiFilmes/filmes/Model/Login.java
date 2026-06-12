@@ -1,12 +1,11 @@
 package com.apiFilmes.filmes.Model;
 
-import java.util.List;
+
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -28,8 +27,6 @@ public class Login {
 	private String senha;
 	
 	
-	@OneToMany(mappedBy="login")
-	   private List<Comentario> comentarios;
 
 	public Long getId() {
 		return id;
@@ -55,16 +52,6 @@ public class Login {
 		this.senha = senha;
 	}
 
-	public List<Comentario> getComentarios() {
-		return comentarios;
-	}
-
-	public void setComentarios(List<Comentario> comentarios) {
-		this.comentarios = comentarios;
-	}
 	
-	
-	
-
 	
 }
