@@ -1,45 +1,77 @@
 .loginContainer {
-  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #1f2430;
+  min-height: calc(100vh - 200px); /* Centraliza na tela descontando header e footer */
+  padding: 20px;
 }
 
 .loginBox {
-  background: #2f3644;
+  background-color: var(--bg-card, rgba(0, 0, 0, 0.05));
   padding: 40px;
-  border-radius: 10px;
-  width: 350px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
+  border: 1px solid rgba(128, 128, 128, 0.2);
+  transition: all 0.3s ease;
 }
 
 .loginBox h2 {
-  color: white;
+  margin: 0;
   text-align: center;
-}
-
-.loginBox input {
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  font-size: 1rem;
-}
-
-.loginBox button {
-  padding: 12px;
-  background: #3decb1;
-  border: none;
-  font-size: 1.1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
+  color: var(--text);
+  font-size: 2rem;
 }
 
 .erro {
-  color: #ff5b5b;
+  background-color: rgba(255, 77, 79, 0.1);
+  color: #ff4d4f;
+  padding: 12px;
+  border-radius: 6px;
+  border-left: 4px solid #ff4d4f;
+  margin: 0;
+  font-size: 0.95rem;
   text-align: center;
-  font-weight: 600;
+  font-weight: 500;
+}
+
+.loginBox input {
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(128, 128, 128, 0.4);
+  background-color: var(--bg);
+  color: var(--text);
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.loginBox input:focus {
+  outline: none;
+  border-color: #0070f3;
+  box-shadow: 0 0 0 2px rgba(0, 112, 243, 0.2);
+}
+
+.loginBox button {
+  padding: 14px;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  margin-top: 10px;
+}
+
+.loginBox button:hover {
+  background-color: #0051bb;
+}
+
+.loginBox button:active {
+  transform: scale(0.98);
 }
