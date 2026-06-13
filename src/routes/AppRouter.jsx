@@ -2,8 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import MainLayout from '../components/MainLayout';
 import Home from '../pages/Home';
 import About from '../pages/About';
-import Contact_Us from '../pages/Contact_US';
-import Details from '../pages/Details';
+import ContactUs from '../pages/ContactUs';
 import Login from '../pages/Login';
 import Logout from '../pages/Logout'
 import Feed from '../components/Feed/Index';
@@ -18,10 +17,9 @@ export default function AppRouter() {
          <Route path="/" element={<Logout/>}/>
            <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<Contact_Us/>}/>
+          <Route path="/contact" element={<ContactUs/>}/>
           <Route path="/feed" element={<Feed />} />
           <Route path="/feed/novo" element={<Post />} />
-          <Route path="/details" element={<Details/>}/>
         </Routes>
       </MainLayout>
     </BrowserRouter>
