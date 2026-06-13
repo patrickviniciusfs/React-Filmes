@@ -1,7 +1,5 @@
 package com.apiFilmes.filmes.Model;
 
-
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,21 +10,19 @@ import jakarta.validation.constraints.Size;
 
 @Entity
 public class Login {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotBlank
-	@Size(max=200)
+	@Size(max = 200)
 	@Email
 	private String email;
-	
+
 	@NotBlank
-	@Size(max=50)
+	@Size(max = 50)
 	private String senha;
-	
-	
 
 	public Long getId() {
 		return id;
@@ -52,6 +48,4 @@ public class Login {
 		this.senha = senha;
 	}
 
-	
-	
 }
