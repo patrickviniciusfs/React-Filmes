@@ -1,7 +1,8 @@
+import { Outlet } from 'react-router-dom';
 import Header from '../Header';
-import Footer from '../Footer/index'
-
-export default function MainLayout({ children }) {
+import Footer from '../Footer';
+import VLibras from '../VLibras';
+export default function MainLayout() {
   return (
     <div style={{ 
       backgroundColor: 'var(--bg)', 
@@ -13,9 +14,12 @@ export default function MainLayout({ children }) {
     }}>
       <Header />
       <main style={{ padding: '30px', flex: 1 }}>
-        {children}
+        <Outlet />
       </main>
       <Footer />
+
+      {/* VLibras vai para todas as paginas */}
+      <VLibras />
     </div>
   );
 }

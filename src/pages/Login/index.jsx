@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../service/api";
-import styles from "./Login.module.css";
+import styles from "./Login.module.css"; 
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -14,27 +14,34 @@ export default function Login() {
     setErro("");
 
     try {
-
+      // Busca a lista de logins diretamente da sua API Spring Boot
       const response = await api.get("/login");
-      const usuarios = response.data;
+      const listaLogins = response.data;
 
-
-      const loginEncontrado = usuarios.find(
+      // Valida se o usuário e senha existem no banco de dados
+      const loginEncontrado = listaLogins.find(
         (log) => log.email === username && log.senha === password
       );
 
       if (loginEncontrado) {
+        // Envia a confirmação ou cria a sessão no backend
+        await api.post(`/login/${loginEncontrado.id}`, {
+          email: username,
+          senha: password,
+        });
 
+        // Salva as informações necessárias de sessão
         localStorage.setItem("username", username);
-        navigate("/home"); 
+        // Se a sua API Spring Boot retornar um token JWT, você pode descomentar a linha abaixo:
+        // localStorage.setItem("token", response.data.token);
+
+        navigate("/home");
       } else {
-  
         setErro("Usuário ou senha incorretos.");
       }
-      
     } catch (error) {
       console.error(error);
-      setErro("Erro de comunicação com o servidor.");
+      setErro("Erro ao conectar com o servidor. Tente novamente.");
     }
   };
 
@@ -42,18 +49,15 @@ export default function Login() {
     <div className={styles.loginContainer}>
       <form className={styles.loginBox} onSubmit={autenticar}>
         <h2>Login</h2>
-        
         {erro && <p className={styles.erro}>{erro}</p>}
-        
         <input
-          type="email" 
+          type="email"
           id="username"
-          placeholder="Email"
+          placeholder="E-mail"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           required
         />
-        
         <input
           type="password"
           id="password"
@@ -62,7 +66,6 @@ export default function Login() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        
         <button type="submit">Entrar</button>
       </form>
     </div>

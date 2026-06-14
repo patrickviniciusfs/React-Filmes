@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import * as styles from "./Feed.module.css";
+import styles from "./Feed.module.css"; // Correção na importação padrão
 import { AiFillLike } from "react-icons/ai";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { useTheme } from "../ThemeContext";
@@ -17,25 +17,27 @@ export default function Feed() {
         setComment(response.data);
       })
       .catch(() => {
-        console.log("Erro de requisição ao buscar comentários");
+        console.error("Erro de requisição ao buscar comentários do Spring Boot");
       });
   }, []);
 
-  
-  async function deleteComent(id) {
-    try {
-      await api.delete(`/comentario/${id}`);
-      setComment(comment.filter((c) => c.id !== id));
-    } catch (error) {
-      console.log("Erro ao deletar comentário", error);
-    }
+  function deleteComent(id) {
+    api.delete(`/comentario/${id}`)
+      .then(() => {
+        setComment(comment.filter((item) => item.id !== id));
+      })
+      .catch(() => console.error("Erro ao deletar comentário."));
   }
 
   function like(id) {
-    setLikedId((prop) => {
-      const proximo = new Set(prop);
-      proximo.has(id) ? proximo.delete(id) : proximo.add(id);
-      return proximo; 
+    setLikedId((prev) => {
+      const proximo = new Set(prev);
+      if (proximo.has(id)) {
+        proximo.delete(id);
+      } else {
+        proximo.add(id);
+      }
+      return proximo;
     });
   }
 
@@ -46,7 +48,7 @@ export default function Feed() {
 
         return (
           <div key={post.id} className={styles.postCard}>
-            <div className={styles.header}>
+            <div className={styles.postHeader}>
               {post.avatarUrl ? (
                 <img
                   src={post.avatarUrl}
@@ -54,33 +56,27 @@ export default function Feed() {
                   className={styles.avatar}
                 />
               ) : (
-                <img
-                  src={`https://api.dicebear.com/9.x/thumbs/svg?seed=${post.nome}`}
-                  alt={post.nome}
-                  className={styles.avatar}
-                  onError={(e) => {
-                    e.target.style.display = "none";
-                  }}
-                />
+                <div className={styles.avatarPlaceholder}>
+                  {getInitials(post.nome || "User")}
+                </div>
               )}
-              
-              <div className={styles.userInfo}>
-                <p className={styles.userName}>{post.nome}</p>
+              <div>
+                <p className={styles.authorName}>{post.nome || "Anônimo"}</p>
                 <p className={styles.postDate}>
                   {new Date(post.dataPostagem).toLocaleDateString("pt-br")}
                 </p>
               </div>
             </div>
             
-            <p className={styles.content}>{post.postagem}</p>
+            <p className={styles.postContent}>{post.postagem}</p>
 
-            <div className={styles.actions}>
+            <div className={styles.postActions}>
               <button
                 className={styles.actionBtn}
                 style={{ color: liked ? likeActiveColor : likeColor }}
                 onClick={() => like(post.id)}
               >
-                <AiFillLike /> {liked ? post.like + 1 : post.like}
+                <AiFillLike /> <span>{liked ? post.like + 1 : post.like}</span>
               </button>
 
               <button

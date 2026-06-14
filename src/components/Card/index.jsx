@@ -12,7 +12,6 @@ export default function Card({ query }) {
     async function carregarFilmes() {
       setLoading(true);
       setSemResultado(false);
-      setFilmes([]);
 
       try {
         let resultados = [];
@@ -22,22 +21,19 @@ export default function Card({ query }) {
           const response = await apiFilmes.get("/search/movie", {
             params: { query: query.trim(), page: 1 }
           });
-
-          resultados = response.data.results.filter((filme) =>
-            filme.title.toLowerCase().includes(query.trim().toLowerCase())
-          );
-
+          
+          resultados = response.data.results || [];
         } else {
           const response = await apiFilmes.get("/movie/popular", {
             params: { page: 1 }
           });
-          resultados = response.data.results;
+          resultados = response.data.results || [];
         }
 
         setFilmes(resultados);
         setSemResultado(resultados.length === 0);
       } catch (error) {
-        console.error("Erro ao carregar filmes:", error.response?.data || error.message);
+        console.error("Erro ao carregar filmes:", error.message);
         setSemResultado(true);
       } finally {
         setLoading(false);
@@ -47,8 +43,8 @@ export default function Card({ query }) {
     carregarFilmes();
   }, [query]);
 
-  if (loading) return <h2>Carregando filmes...</h2>;
-  if (semResultado) return <h2>Nenhum filme encontrado para "{query}".</h2>;
+  if (loading) return <h2 style={{ textAlign: 'center', marginTop: '20px' }}>Carregando filmes...</h2>;
+  if (semResultado) return <h2 style={{ textAlign: 'center', marginTop: '20px' }}>Nenhum filme encontrado para "{query}".</h2>;
 
   return (
     <div className={styles.galeria}>
@@ -56,7 +52,7 @@ export default function Card({ query }) {
         <div key={filme.id} className={styles.card}>
           <h3>{filme.title}</h3>
           {filme.poster_path ? (
-            <Link to={`/details/${filme.id}`}>
+            <Link to={`/details/${filme.id}`} style={{ width: '100%' }}>
               <img
                 src={`https://image.tmdb.org/t/p/w500${filme.poster_path}`}
                 alt={filme.title}

@@ -1,10 +1,10 @@
 import { useSearchParams } from "react-router-dom";
-import styles from "./Contact_US.module.css";
-
-export default function Contact_Us() {
+import styles from "./ContactUs.module.css";
+export default function ContactUs() {
   const [searchParams, setSearchParams] = useSearchParams();
   const nomeParam = searchParams.get("nome") || "";
   const mensagemParam = searchParams.get("mensagem") || "";
+
   const handleChange = (chave, valor) => {
     setSearchParams(
       (prev) => {
@@ -18,10 +18,12 @@ export default function Contact_Us() {
       { replace: true }
     );
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     alert(`Mensagem enviada com sucesso por ${nomeParam}!`);
   };
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Fale Conosco</h1>
@@ -57,11 +59,11 @@ export default function Contact_Us() {
         </button>
       </form>
 
-      {(nomeParam || Array.from(mensagemParam).length > 0) && (
+      {(nomeParam || mensagemParam.trim().length > 0) && (
         <div className={styles.previewBox}>
-          <h3 style={{ margin: "0 0 10px 0" }}>Visualização do Envio:</h3>
-          {nomeParam && <p><strong>Remetente:</strong> {nomeParam}</p>}
-          {mensagemParam && <p><strong>Conteúdo:</strong> {mensagemParam}</p>}
+          <h3 style={{ margin: "0 0 10px 0", color: "var(--text)" }}>Visualização do Envio:</h3>
+          {nomeParam && <p style={{ color: "var(--text)" }}><strong>Remetente:</strong> {nomeParam}</p>}
+          {mensagemParam && <p style={{ color: "var(--text)" }}><strong>Conteúdo:</strong> {mensagemParam}</p>}
         </div>
       )}
     </div>

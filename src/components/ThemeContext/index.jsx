@@ -4,24 +4,28 @@ const ThemeContext = createContext();
 
 const LIKE_ACTIVE_COLOR = '#e0245e';
 
+// Extrai as duas primeiras iniciais de forma segura
 function getInitials(name) {
-  return name ?.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase();
+  if (!name) return "";
+  return name.trim().split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase();
 }
 
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
 
-  const likeColor = theme == 'dark' ? '#ffff' : '#3333';
+  // Ajustado de 4 dígitos para 6 dígitos para evitar transparência indesejada
+  const likeColor = theme === 'dark' ? '#ffffff' : '#333333';
 
   useEffect(() => {
     const root = window.document.documentElement;
     if (theme === 'dark') {
       root.style.setProperty('--bg', '#121212');
       root.style.setProperty('--text', '#ffffff');
-    }
-    else {
+      root.style.setProperty('--bg-card', '#1e1e1e');
+    } else {
       root.style.setProperty('--bg', '#ffffff');
       root.style.setProperty('--text', '#333333');
+      root.style.setProperty('--bg-card', '#fafafa');
     }
     localStorage.setItem('theme', theme);
   }, [theme]);

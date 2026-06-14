@@ -1,3 +1,42 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  transition: all 0.3s ease;
+}
+
+.headerLight {
+  border-bottom: 1px solid #e0e0e0;
+  background-color: #fafafa;
+}
+
+.headerDark {
+  border-bottom: 1px solid #333;
+  background-color: #1e1e1e;
+}
+
+.logo {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.nav {
+  display: flex;
+  gap: 20px;
+}
+
+.link {
+  color: var(--text);
+  text-decoration: none;
+  fontWeight: 500;
+  transition: opacity 0.2s ease;
+}
+
+.link:hover {
+  opacity: 0.7;
+}
+
 .userSection {
   display: flex;
   align-items: center;
@@ -27,4 +66,23 @@
   background-color: #ff4d4f;
   color: #ffffff;
   transform: scale(1.05);
+}
+
+.themeBtn {
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.themeBtnLight {
+  background-color: #333;
+  color: #fff;
+}
+
+.themeBtnDark {
+  background-color: #f0f0f0;
+  color: #333;
 }
