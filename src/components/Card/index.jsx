@@ -52,7 +52,7 @@ export default function Card({ query }) {
         <div key={filme.id} className={styles.card}>
           <h3>{filme.title}</h3>
           {filme.poster_path ? (
-            <Link to={`/details/${filme.id}`} style={{ width: '100%' }}>
+            <Link to={`/feed/${filme.id}`} style={{ width: '100%' }}>
               <img
                 src={`https://image.tmdb.org/t/p/w500${filme.poster_path}`}
                 alt={filme.title}

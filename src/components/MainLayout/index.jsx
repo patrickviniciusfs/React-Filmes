@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 import Header from '../Header';
 import Footer from '../Footer';
-import VLibras from '../VLibras';
+
 export default function MainLayout() {
   return (
     <div style={{ 
@@ -17,9 +17,6 @@ export default function MainLayout() {
         <Outlet />
       </main>
       <Footer />
-
-      {/* VLibras vai para todas as paginas */}
-      <VLibras />
     </div>
   );
 }

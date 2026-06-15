@@ -1,36 +1,33 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import MainLayout from "../components/MainLayout";
-import Home from "../pages/Home";
-import About from "../pages/About";
-import ContactUs from "../pages/ContactUs";
-import Login from "../pages/Login";
-import Logout from "../pages/Logout";
-import Feed from "../components/Feed/Index";
-import Post from "../pages/post/Index";
-import PrivateRoute from "./PrivateRoute"; // precisamos revisar aqui.
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import MainLayout from '../components/MainLayout';
+import PrivateRoute from './PrivateRoute';
+
+// Importações com os nomes exatos das pastas físicas
+import Home from '../pages/Home/index.jsx';         
+import About from '../pages/About/index.jsx';       
+import ContactUs from '../pages/ContactUS/index.jsx'; 
+import Login from '../pages/Login/index.jsx';       
+import Logout from '../pages/Logout/index.jsx';     
+import Feed from '../pages/Feed/index.jsx';
 
 export default function AppRouter() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Rota pública de Autenticação */}
         <Route path="/" element={<Login />} />
+        <Route path="/logout" element={<Logout />} />
 
-        {/* essa parte abaix vai exibir o mainLayout com header e footer */}
-        <Route 
-          element={
-            <PrivateRoute>
-              <MainLayout />
-            </PrivateRoute>
-          }
-        >
-          <Route path="/home" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/contact" element={<ContactUs />} />
-          <Route path="/feed" element={<Feed />} />
-          <Route path="/feed/novo" element={<Post />} />
-          <Route path="/logout" element={<Logout />} />
+        {/* Rotas protegidas */}
+        <Route path="/" element={<PrivateRoute><MainLayout /></PrivateRoute>}>
+          <Route path="home" element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="contact" element={<ContactUs />} />
+          
+          {/* Rota unificada do Feed */}
+          <Route path="feed/:filmeId" element={<Feed />} />
         </Route>
+
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

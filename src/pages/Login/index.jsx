@@ -1,70 +1,49 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../service/api";
-import styles from "./Login.module.css"; 
+import styles from "./Login.module.css"; // Certifique-se de que o "L" bate com o nome físico do arquivo no disco
 
 export default function Login() {
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState(""); 
   const [password, setPassword] = useState("");
   const [erro, setErro] = useState("");
   const navigate = useNavigate();
 
-  const autenticar = async (e) => {
+  function handleLogin(e) {
     e.preventDefault();
     setErro("");
 
-    try {
-      // Busca a lista de logins diretamente da sua API Spring Boot
-      const response = await api.get("/login");
-      const listaLogins = response.data;
-
-      // Valida se o usuário e senha existem no banco de dados
-      const loginEncontrado = listaLogins.find(
-        (log) => log.email === username && log.senha === password
-      );
-
-      if (loginEncontrado) {
-        // Envia a confirmação ou cria a sessão no backend
-        await api.post(`/login/${loginEncontrado.id}`, {
-          email: username,
-          senha: password,
-        });
-
-        // Salva as informações necessárias de sessão
-        localStorage.setItem("username", username);
-        // Se a sua API Spring Boot retornar um token JWT, você pode descomentar a linha abaixo:
-        // localStorage.setItem("token", response.data.token);
-
+    api.post("/auth/login", { email: username, senha: password })
+      .then((response) => {
+        localStorage.setItem("username", response.data.email);
+        localStorage.setItem("token", response.data.token);
         navigate("/home");
-      } else {
-        setErro("Usuário ou senha incorretos.");
-      }
-    } catch (error) {
-      console.error(error);
-      setErro("Erro ao conectar com o servidor. Tente novamente.");
-    }
-  };
+      })
+      .catch((err) => {
+        setErro(err.response?.data || "Usuário ou senha inválidos.");
+      });
+  }
 
   return (
-    <div className={styles.loginContainer}>
-      <form className={styles.loginBox} onSubmit={autenticar}>
+    // Ajustado para usar .loginContainer
+    <div className={styles.loginContainer}> 
+      {/* Ajustado para usar .loginBox para o formulário herdar o estilo de card */}
+      <form onSubmit={handleLogin} className={styles.loginBox}>
         <h2>Login</h2>
         {erro && <p className={styles.erro}>{erro}</p>}
-        <input
-          type="email"
-          id="username"
-          placeholder="E-mail"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
+        <input 
+          type="email" 
+          placeholder="E-mail" 
+          value={username} 
+          onChange={(e) => setUsername(e.target.value)} 
+          required 
         />
-        <input
-          type="password"
-          id="password"
-          placeholder="Senha"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
+        <input 
+          type="password" 
+          placeholder="Senha" 
+          value={password} 
+          onChange={(e) => setPassword(e.target.value)} 
+          required 
         />
         <button type="submit">Entrar</button>
       </form>

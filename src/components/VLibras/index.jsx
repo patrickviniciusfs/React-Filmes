@@ -11,21 +11,21 @@ export default function VLibras() {
         new window.VLibras.Widget("https://vlibras.gov.br/app");
       }
     };
-
     document.body.appendChild(script);
 
     return () => {
       document.body.removeChild(script);
+      const widget = document.querySelector("[vw]");
+      if (widget) widget.remove();
     };
   }, []);
 
   return (
-    <div className="enabled-vlibras">
-      <div id="vlibras-widget" className="vlibras-widget-wrapper">
-        <div className="vw-access-button"></div>
-        <div className="vw-plugin-wrapper">
-          <div className="vw-plugin-top-wrapper"></div>
-        </div>
+    // Estrutura padrão exigida pelo plugin governamental
+    <div vw="true" className="enabled">
+      <div vw-access-button="true" className="active"></div>
+      <div vw-plugin-wrapper="true">
+        <div className="vw-plugin-top-wrapper"></div>
       </div>
     </div>
   );
