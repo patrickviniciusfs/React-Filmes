@@ -18,7 +18,7 @@ export default function Header() {
 
   const handleLogout = () => {
     localStorage.clear(); // Remove token, username e limpa a sessão
-    navigate("/login"); // Redireciona de volta para a tela de login
+    navigate("/"); // Redireciona de volta para a tela de login
   };
 
   const linkStyle = {
