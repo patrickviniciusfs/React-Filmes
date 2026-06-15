@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router-dom";
-import styles from "./Contact_US.module.css";
+import styles from "./ContactUS.module.css";
 
 export default function ContactUs() {
   const [searchParams, setSearchParams] = useSearchParams();

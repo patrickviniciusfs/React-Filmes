@@ -16,54 +16,74 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.apiFilmes.filmes.Model.Login;
+import com.apiFilmes.filmes.Security.JwtService;
 import com.apiFilmes.filmes.Service.LoginService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 
-
 @RestController
-@RequestMapping("/login")
+@RequestMapping("/usuarios")
 public class LoginController {
-	
+
 	@Autowired
 	private LoginService loginService;
-	
-	@Operation(summary="Listar logins")
+
+	@Autowired
+	private JwtService jwtService;
+
+	@Operation(summary = "Autenticar usuário")
+	@PostMapping("/login")
+	public ResponseEntity<String> autenticar(@RequestBody Login login) {
+
+		Login usuario = loginService.buscarPorEmail(login.getEmail());
+
+		if (usuario == null) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+					.body("Usuário não encontrado");
+		}
+
+		if (!usuario.getSenha().equals(login.getSenha())) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+					.body("Senha inválida");
+		}
+
+		String token = jwtService.gerarToken(usuario.getEmail());
+
+		return ResponseEntity.ok(token);
+	}
+
+	@Operation(summary = "Cadastrar usuário")
+	@PostMapping("/cadastro")
+	public ResponseEntity<Login> salvarLogin(@Valid @RequestBody Login login) {
+		return ResponseEntity.status(HttpStatus.CREATED)
+				.body(loginService.savarLogin(login));
+	}
+
+	@Operation(summary = "Listar usuários")
 	@GetMapping
-	public ResponseEntity<List<Login>> listarLogins(){
+	public ResponseEntity<List<Login>> listarLogins() {
 		return ResponseEntity.ok(loginService.buscaLogins());
-		 
 	}
-	
-	@Operation(summary="Buscar login por id")
-	
+
+	@Operation(summary = "Buscar usuário por ID")
 	@GetMapping("/{id}")
-	public ResponseEntity<Optional<Login>> listarLogin(@PathVariable Long id){
+	public ResponseEntity<Optional<Login>> listarLogin(@PathVariable Long id) {
 		return ResponseEntity.ok(loginService.buscaLogin(id));
-		 
 	}
-	@Operation(summary="Criar login")
-	
-	@PostMapping
-	public ResponseEntity<Login> salvarLogin(@Valid @RequestBody Login login){
-		return ResponseEntity.status(HttpStatus.CREATED).body(loginService.savarLogin(login));
-		
-	}
-	
-	@Operation(summary="Atualizar dados de login")
-	
+
+	@Operation(summary = "Atualizar usuário")
 	@PutMapping("/{id}")
-	public ResponseEntity<Login> atualizarLogin(@Valid @RequestBody Login login, @PathVariable Long id){
-		return ResponseEntity.ok( loginService.atualizar(login, id));
-	}
-	
-	@Operation(summary="Deletar login")
-	
-	@DeleteMapping
-	public void deletar(@PathVariable Long id){
-	 loginService.deletar(id);
+	public ResponseEntity<Login> atualizarLogin(
+			@Valid @RequestBody Login login,
+			@PathVariable Long id) {
+
+		return ResponseEntity.ok(loginService.atualizar(login, id));
 	}
 
-
+	@Operation(summary = "Excluir usuário")
+	@DeleteMapping("/{id}")
+	public void deletar(@PathVariable Long id) {
+		loginService.deletar(id);
+	}
 }
