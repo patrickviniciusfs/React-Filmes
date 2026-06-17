@@ -147,6 +147,16 @@ O sistema utiliza autenticação baseada em **JWT (JSON Web Token)**.
 
 > ⚠️ **No primeiro acesso é necessário autenticar manualmente pelo Swagger da API para obtenção do token JWT.**
 
+> Observação
+
+---
+
+```
+ No primeiro acesso, ao TMDB crie uma conta para ter acesso a API e cole o token no arquivo env e faça o import na pasta service api.Filmes .
+
+```
+---
+
 ---
 
 # 🔑 Credenciais de Teste
@@ -164,15 +174,7 @@ Após autenticar no Swagger, o token será utilizado pelo front-end para acessar
 
 ---
 
-> Observação
 
----
-
-```
- No primeiro acesso, ao TMDB crie uma conta para ter acesso a API e cole o token no arquivo env e faça o import na pasta service api.Filmes .
-
-```
----
 
 # 📡 APIs Consumidas
 
